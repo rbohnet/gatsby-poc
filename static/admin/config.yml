@@ -9,7 +9,7 @@ collections:
   - name: "stream"
     label: "Stream"
     folder: "content/stream"
-    path: "{{year}}/{{month}}-{{day}}-{{slug}}"
+    path: "{{year}}/{{slug}}"
     create: true
     slug: "{{month}}-{{day}}-{{slug}}"
     editor:
