@@ -1,22 +1,22 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Parkdale Grace Fellowship`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Parkdale Grace Church`,
+      summary: `Exalting Jesus Christ`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    description: `Exalting Jesus Christ`,
+    siteUrl: `https://poc.parkdalegrace.ca/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `parkdalegrace`,
     },
   },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/blog`,
-        name: `blog`,
+        path: `${__dirname}/content/stream`,
+        name: `stream`,
       },
     },
     {
@@ -24,6 +24,13 @@ module.exports = {
       options: {
         path: `${__dirname}/content/assets`,
         name: `assets`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/bulletin`,
+        name: `bulletin`,
       },
     },
     {
@@ -57,18 +64,18 @@ module.exports = {
       },
     },
     `gatsby-plugin-feed`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
-      },
-    },
+    //{
+    //  resolve: `gatsby-plugin-manifest`,
+    //  options: {
+    //    name: `Gatsby Starter Blog`,
+    //    short_name: `GatsbyJS`,
+    //    start_url: `/`,
+    //    background_color: `#ffffff`,
+    //    theme_color: `#663399`,
+    //    display: `minimal-ui`,
+    //    icon: `content/assets/gatsby-icon.png`,
+    //  },
+    //},
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -76,7 +83,7 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
-    `gatsby-plugin-netlify-cms`
+    `gatsby-plugin-netlify-cms`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
