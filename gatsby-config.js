@@ -15,15 +15,15 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/stream`,
-        name: `stream`,
+        path: `${__dirname}/content`,
+        name: `content`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/assets`,
-        name: `assets`,
+        path: `${__dirname}/src/pages`,
+        name: `pages`,
       },
     },
     {

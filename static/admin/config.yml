@@ -7,10 +7,10 @@ public_folder: /img
 
 collections:
   - name: "stream"
-    label: "Stream"
-    folder: "content/stream"
-    path: "{{year}}/{{slug}}"
+    label: "Stream Item"
+    folder: "content"
     create: true
+    path: "stream/{{year}}/{{slug}}"
     slug: "{{month}}-{{day}}-{{slug}}"
     editor:
       preview: false
