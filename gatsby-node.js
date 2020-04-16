@@ -1,64 +1,78 @@
-const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+/**
+ * Implement Gatsby's Node APIs in this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/node-apis/
+ */
+
+const path = require("path")
+const { createFilePath } = require("gatsby-source-filesystem")
+const { fmImagesToRelative } = require("gatsby-remark-relative-images")
+
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
+  fmImagesToRelative(node) // convert image paths for gatsby images
+
+  if (node.internal.type === `MarkdownRemark` && node.frontmatter.templateKey) {
+    const slug = createFilePath({ node, getNode })
+    createNodeField({
+      node,
+      name: `slug`,
+      value: slug,
+    })
+  }
+}
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-
-  const blogPost = path.resolve(`./src/templates/blog-post.js`)
-  const result = await graphql(
-    `
-      {
-        allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-              }
+  const result = await graphql(`
+    query {
+      allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC}) {
+        edges {
+          node {
+            id
+            fields {
+              slug
+            }
+            frontmatter {
+              templateKey
             }
           }
         }
       }
-    `
-  )
+    }
+  `)
+  
+  const bulletins = result.data.allMarkdownRemark.edges.filter( edge => {
+    return edge.node.frontmatter.templateKey === 'bulletin'
+  })
 
-  if (result.errors) {
-    throw result.errors
-  }
-
-  // Create blog posts pages.
-  const posts = result.data.allMarkdownRemark.edges
-
-  posts.forEach((post, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1].node
-    const next = index === 0 ? null : posts[index - 1].node
+  bulletins.forEach((post, index) => {
+    let previous = index === bulletins.length - 1 ? null : bulletins[index + 1].node
+    let next = index === 0 ? null : bulletins[index - 1].node
 
     createPage({
       path: post.node.fields.slug,
-      component: blogPost,
+      component: path.resolve(`src/templates/bulletin-template.js`),
       context: {
+        id: post.node.id,
         slug: post.node.fields.slug,
-        previous,
         next,
+        previous
       },
     })
   })
-}
-
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
-
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
+  
+  const streams = result.data.allMarkdownRemark.edges.filter( edge => {
+    return edge.node.frontmatter.templateKey === 'stream'
+  })
+  streams.forEach((post) => {
+    createPage({
+      path: post.node.fields.slug,
+      component: path.resolve(`src/templates/stream-template.js`),
+      context: {
+        id: post.node.id,
+        slug: post.node.fields.slug,
+      },
     })
-  }
+  })
 }

@@ -1,82 +1,84 @@
 module.exports = {
   siteMetadata: {
-    title: `Parkdale Grace Fellowship`,
-    author: {
-      name: `Parkdale Grace Church`,
-      summary: `Exalting Jesus Christ`,
-    },
-    description: `Exalting Jesus Christ`,
-    siteUrl: `https://poc.parkdalegrace.ca/`,
-    social: {
-      twitter: `parkdalegrace`,
-    },
+    title: `Parkdale Grace`,
+    description: `Website for Parkdale Grace Fellowship`,
+    author: `Parkdale Grace fellowship`,
   },
   plugins: [
+    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content`,
-        name: `content`,
+        name: `uploads`,
+        path: `${__dirname}/static/media`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`,
         name: `pages`,
+        path: `${__dirname}/src/pages`,
       },
     },
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: `gatsby-source-filesystem`,
       options: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 590,
-            },
-          },
-          {
-            resolve: `gatsby-remark-responsive-iframe`,
-            options: {
-              wrapperStyle: `margin-bottom: 1.0725rem`,
-            },
-          },
-          `gatsby-remark-prismjs`,
-          `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-smartypants`,
-        ],
+        name: `content`,
+        path: `${__dirname}/content`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
       },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-   // {
-   //   resolve: `gatsby-plugin-google-analytics`,
-   //   options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
-   //   },
-   // },
-    //`gatsby-plugin-feed`,
-    //{
-    //  resolve: `gatsby-plugin-manifest`,
-    //  options: {
-    //    name: `Gatsby Starter Blog`,
-    //    short_name: `GatsbyJS`,
-    //    start_url: `/`,
-    //    background_color: `#ffffff`,
-    //    theme_color: `#663399`,
-    //    display: `minimal-ui`,
-    //    icon: `content/assets/gatsby-icon.png`,
-    //  },
-    //},
-    `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-plugin-typography`,
+      resolve: 'gatsby-transformer-remark',
       options: {
-        pathToConfigModule: `src/utils/typography`,
+        plugins: [
+          {
+            resolve: 'gatsby-remark-relative-images',
+            options: {
+              name: 'uploads',
+            },
+          },
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              // It's important to specify the maxWidth (in pixels) of
+              // the content container as this plugin uses this as the
+              // base for generating different widths of each image.
+              maxWidth: 1024,
+            },
+          },
+          {
+            resolve: 'gatsby-remark-copy-linked-files',
+            options: {
+              destinationDir: 'static',
+            },
+          },
+        ],
       },
     },
+    `gatsby-plugin-sharp`,
     `gatsby-plugin-netlify-cms`,
+    /*
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `gatsby-starter-default`,
+        short_name: `starter`,
+        start_url: `/`,
+        background_color: `#663399`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+      icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    */
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

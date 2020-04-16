@@ -2,20 +2,49 @@ backend:
   name: git-gateway
   branch: master
 
-media_folder: static/img
-public_folder: /img
+media_folder: static/media
+public_folder: /media
 
 collections:
+  - name: "bulletin"
+    label: "Bulletin"
+    folder: "content"
+    create: true
+    path: "bulletin/{{year}}/{{slug}}"
+    slug: "{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: true 
+    fields:
+      - { label: "Template Key", name: "templatekey", widget: "hidden", default: "bulletin" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
   - name: "stream"
     label: "Stream Item"
     folder: "content"
+    media_folder: ''
+    public_folder: ''
     create: true
     path: "stream/{{year}}/{{slug}}"
     slug: "{{month}}-{{day}}-{{slug}}"
     editor:
       preview: false
     fields:
+      - { label: "Template Key", name: "templatekey", widget: "hidden", default: "stream" }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Description", name: "description", widget: "string" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Audio URL", name: "audioUrl", widget: "string" }
+      - { label: "Video URL", name: "videoUrl", widget: "string", required: false }
+      - label: "Notes Pdf attachment"
+        name: "attachments"
+        widget: "file"
+        required: false
+        media_library: 
+          config:
+            multiple: true
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        fields:
+            - { label: "Tag", name: "tag", widget: "string"}
