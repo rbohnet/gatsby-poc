@@ -10,8 +10,8 @@ collections:
     label: "Bulletin"
     folder: "content"
     create: true
-    path: "bulletin/{{year}}/{{slug}}"
-    slug: "{{month}}-{{day}}-{{slug}}"
+    path: "bulletin/{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
       preview: true 
     fields:
