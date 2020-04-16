@@ -46,6 +46,5 @@ collections:
       - label: "Tags"
         name: "tags"
         widget: "list"
-        required: false
         fields:
-            - { label: "Tag", name: "tag", widget: "string"}
+            - { label: "", name: "", widget: "string"}
